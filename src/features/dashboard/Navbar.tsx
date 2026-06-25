@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Link from "next/link";
 import { useTheme } from "@/providers/ThemeProvider";
 
 interface NavbarProps {
@@ -197,18 +198,20 @@ export default function DashboardNavbar({ onMenuClick }: NavbarProps) {
                 <p className="text-[11.5px] mt-0.5" style={{ color: "var(--bz-text-3)" }}>arjun@billzcore.io</p>
               </div>
               {[
-                { icon: "👤", label: "My Profile" },
-                { icon: "⚙️", label: "Settings" },
-                { icon: "🔗", label: "Integrations" },
-                { icon: "📊", label: "Billing" },
+                { icon: "👤", label: "My Profile",    href: "/dashboard/profile"  },
+                { icon: "⚙️", label: "Settings",      href: "/dashboard/settings" },
+                { icon: "💳", label: "Subscription",  href: "/dashboard/billing"  },
+                { icon: "📊", label: "Billing",        href: "/dashboard/finance"  },
               ].map(item => (
-                <button
+                <Link
                   key={item.label}
-                  className="w-full flex items-center gap-2.5 px-4 py-2 text-[12.5px] transition-colors hover:bg-[rgba(99,102,241,0.06)] text-left"
+                  href={item.href}
+                  onClick={() => setProfileOpen(false)}
+                  className="w-full flex items-center gap-2.5 px-4 py-2 text-[12.5px] transition-colors hover:bg-[rgba(99,102,241,0.06)]"
                   style={{ color: "var(--bz-text-2)" }}
                 >
                   <span>{item.icon}</span> {item.label}
-                </button>
+                </Link>
               ))}
               <div className="border-t" style={{ borderColor: "var(--bz-border-hard)" }}>
                 <button
