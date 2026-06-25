@@ -17,10 +17,11 @@ import { useTheme } from "@/providers/ThemeProvider";
 /* ─── Data ──────────────────────────────────────────────────────────────── */
 
 const LINKS = [
-  { href: "#features", label: "Features" },
-  { href: "#pricing", label: "Pricing" },
-  { href: "#docs", label: "Docs" },
-  { href: "#changelog", label: "Changelog" },
+  { href: "#features",     label: "Features"     },
+  { href: "#pricing",      label: "Pricing"      },
+  { href: "#integrations", label: "Integrations" },
+  { href: "#changelog",    label: "Changelog"    },
+  { href: "#docs",         label: "Docs"         },
 ];
 
 /* ─── Logo ──────────────────────────────────────────────────────────────── */
