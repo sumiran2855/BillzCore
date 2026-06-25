@@ -16,7 +16,7 @@ function StatusPill({ status }: { status: QuotationStatus }) {
 }
 
 function isExpired(q: Quotation) {
-  return q.status !== "accepted" && q.status !== "converted" && q.status !== "cancelled"
+  return q.status !== "accepted" && q.status !== "converted"
     && new Date(q.validUntil) < new Date();
 }
 
