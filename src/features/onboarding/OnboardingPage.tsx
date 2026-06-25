@@ -14,6 +14,7 @@
 
 import { useEffect, useState } from "react";
 import { useTheme } from "@/providers/ThemeProvider";
+import Navbar from "@/features/navbar/Navbar";
 
 /* ─── Types & Data ──────────────────────────────────────────────────────── */
 
@@ -362,8 +363,12 @@ export default function OnboardingPage() {
         />
       </div>
 
+      {/* ── Navbar ── */}
+      <Navbar />
+
       {/* ── Hero ── */}
       <section className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 sm:px-6 pt-24 pb-16">
+
         <div className="w-full max-w-[1120px] grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
           {/* Left copy */}

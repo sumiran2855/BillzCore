@@ -214,12 +214,14 @@ export default function DashboardNavbar({ onMenuClick }: NavbarProps) {
                 </Link>
               ))}
               <div className="border-t" style={{ borderColor: "var(--bz-border-hard)" }}>
-                <button
+                <Link
+                  href="/"
+                  onClick={() => setProfileOpen(false)}
                   className="w-full flex items-center gap-2.5 px-4 py-2 text-[12.5px] transition-colors hover:bg-red-50 text-left"
                   style={{ color: "#EF4444" }}
                 >
                   <span>🚪</span> Sign out
-                </button>
+                </Link>
               </div>
             </div>
           )}
