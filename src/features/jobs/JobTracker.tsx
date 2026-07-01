@@ -48,17 +48,18 @@ function KanbanCard({ job, onEdit }: { job: Job; onEdit: (j: Job) => void }) {
   const pc = PRIORITY_CONFIG[job.priority];
   const daysLeft = Math.ceil((new Date(job.deadline).getTime() - Date.now()) / 86400000);
   return (
-    <div className="rounded-xl border p-3.5 space-y-2.5 cursor-pointer hover:shadow-md transition-all duration-200 group"
+    <div className="relative rounded-xl border p-3.5 space-y-2.5 cursor-pointer hover:shadow-md transition-all duration-200 group"
       style={{ backgroundColor: "var(--bz-card-bg)", borderColor: "var(--bz-border-hard)", borderLeft: `3px solid ${pc.color}` }}>
       {/* Top */}
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
           <p className="text-[11px] font-bold" style={{ color: "#6366F1" }}>{job.jobCode}</p>
           <Link href={`/dashboard/jobs/${job.id}`}>
+            <span className="absolute inset-0" />
             <p className="text-[12.5px] font-bold mt-0.5 leading-tight hover:underline line-clamp-2" style={{ color: "var(--bz-text-1)" }}>{job.title}</p>
           </Link>
         </div>
-        <button onClick={() => onEdit(job)} className="h-6 w-6 flex items-center justify-center rounded opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: "var(--bz-text-3)" }}>
+        <button onClick={() => onEdit(job)} className="relative z-10 h-6 w-6 flex items-center justify-center rounded opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: "var(--bz-text-3)" }}>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
         </button>
       </div>
@@ -246,7 +247,7 @@ export default function JobTrackerPage() {
             const colJobs = filtered.filter(j => j.status === status);
             const cfg = STATUS_CONFIG[status];
             return (
-              <div key={status} className="shrink-0 rounded-xl border flex flex-col" style={{ width: "260px", backgroundColor: "var(--bz-bg)", borderColor: "var(--bz-border-hard)" }}>
+              <div key={status} className="shrink-0 rounded-xl border flex flex-col" style={{ width: "290px", backgroundColor: "var(--bz-bg)", borderColor: "var(--bz-border-hard)" }}>
                 {/* Column Header */}
                 <div className="flex items-center justify-between px-3 py-2.5 rounded-t-xl border-b" style={{ borderColor: "var(--bz-border-hard)", backgroundColor: `${cfg.color}0a` }}>
                   <div className="flex items-center gap-2">

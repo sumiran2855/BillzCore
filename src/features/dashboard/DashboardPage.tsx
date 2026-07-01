@@ -409,7 +409,7 @@ export default function DashboardPage() {
 
         {/* Job Pipeline */}
         <div className="rounded-xl border p-5" style={{ backgroundColor: "var(--bz-card-bg)", borderColor: "var(--bz-border-hard)" }}>
-          <CardHeader title="Job Pipeline" sub={`${totalPipeline} total applicants`} action={<a href="/dashboard/jobs" className="text-[11.5px] font-semibold" style={{ color: "#6366F1" }}>View all →</a>} />
+          <CardHeader title="Job Pipeline" sub={`${totalPipeline} total applicants`} action={<a href="/dashboard/jobs" className="text-[11.5px] font-semibold" style={{ color: "#6366F1" }}>View all</a>} />
           <div className="flex h-2.5 rounded-full overflow-hidden mb-4">
             {jobPipeline.map(j => (
               <div key={j.label} title={`${j.label}: ${j.count}`} style={{ width: `${(j.count / totalPipeline) * 100}%`, backgroundColor: j.color }} />
@@ -454,7 +454,7 @@ export default function DashboardPage() {
             action={
               <div className="flex items-center gap-2">
                 <span className="text-[11px] font-bold px-2 py-0.5 rounded-full" style={{ backgroundColor: "rgba(6,182,212,0.10)", color: "#06B6D4" }}>+31% YoY</span>
-                <a href="/dashboard/sales" className="text-[11.5px] font-semibold" style={{ color: "#6366F1" }}>View all →</a>
+                <a href="/dashboard/sales" className="text-[11.5px] font-semibold" style={{ color: "#6366F1" }}>View all</a>
               </div>
             }
           />
@@ -484,7 +484,7 @@ export default function DashboardPage() {
             action={
               <div className="flex items-center gap-2">
                 <span className="text-[11px] font-bold px-2 py-0.5 rounded-full" style={{ backgroundColor: "rgba(139,92,246,0.10)", color: "#8B5CF6" }}>↑ 18.4%</span>
-                <a href="/dashboard/finance" className="text-[11.5px] font-semibold" style={{ color: "#6366F1" }}>View all →</a>
+                <a href="/dashboard/finance" className="text-[11.5px] font-semibold" style={{ color: "#6366F1" }}>View all</a>
               </div>
             }
           />
@@ -510,7 +510,7 @@ export default function DashboardPage() {
 
         {/* Revenue Split Donut */}
         <div className="rounded-xl border p-5" style={{ backgroundColor: "var(--bz-card-bg)", borderColor: "var(--bz-border-hard)" }}>
-          <CardHeader title="Revenue Split" sub="By business segment" action={<a href="/dashboard/finance" className="text-[11.5px] font-semibold" style={{ color: "#6366F1" }}>View all →</a>} />
+          <CardHeader title="Revenue Split" sub="By business segment" action={<a href="/dashboard/finance" className="text-[11.5px] font-semibold" style={{ color: "#6366F1" }}>View all</a>} />
           {/* SVG Donut */}
           <div className="flex items-center justify-center my-2">
             <svg viewBox="0 0 120 120" width="140" height="140">
@@ -568,7 +568,7 @@ export default function DashboardPage() {
               <h2 className="text-[13.5px] font-bold" style={{ color: "var(--bz-text-1)" }}>Recent Payments</h2>
               <p className="text-[11.5px] mt-0.5" style={{ color: "var(--bz-text-3)" }}>Latest received transactions</p>
             </div>
-            <a href="/dashboard/invoices" className="text-[11.5px] font-semibold" style={{ color: "#6366F1" }}>View all →</a>
+            <a href="/dashboard/invoices" className="text-[11.5px] font-semibold" style={{ color: "#6366F1" }}>View all</a>
           </div>
           <div className="divide-y" style={{ borderColor: "var(--bz-border-hard)" }}>
             {recentPayments.map(p => (
@@ -596,7 +596,7 @@ export default function DashboardPage() {
             </div>
             <div className="flex items-center gap-2">
               <span className="text-[11px] font-bold px-2 py-0.5 rounded-full" style={{ backgroundColor: "rgba(239,68,68,0.10)", color: "#EF4444" }}>₹4.12L overdue</span>
-              <a href="/dashboard/finance" className="text-[11.5px] font-semibold" style={{ color: "#6366F1" }}>View all →</a>
+              <a href="/dashboard/finance" className="text-[11.5px] font-semibold" style={{ color: "#6366F1" }}>View all</a>
             </div>
           </div>
           <div className="divide-y" style={{ borderColor: "var(--bz-border-hard)" }}>
@@ -626,7 +626,7 @@ export default function DashboardPage() {
         <div className="rounded-xl border" style={{ backgroundColor: "var(--bz-card-bg)", borderColor: "var(--bz-border-hard)" }}>
           <div className="flex items-center justify-between px-5 py-3.5 border-b" style={{ borderColor: "var(--bz-border-hard)" }}>
             <h2 className="text-[13.5px] font-bold" style={{ color: "var(--bz-text-1)" }}>Recent Candidates</h2>
-            <a href="/dashboard/candidates" className="text-[11.5px] font-semibold" style={{ color: "#6366F1" }}>View all →</a>
+            <a href="/dashboard/candidates" className="text-[11.5px] font-semibold" style={{ color: "#6366F1" }}>View all</a>
           </div>
           <div className="divide-y" style={{ borderColor: "var(--bz-border-hard)" }}>
             {recentCandidates.map(c => (
@@ -648,7 +648,7 @@ export default function DashboardPage() {
         <div className="rounded-xl border" style={{ backgroundColor: "var(--bz-card-bg)", borderColor: "var(--bz-border-hard)" }}>
           <div className="flex items-center justify-between px-5 py-3.5 border-b" style={{ borderColor: "var(--bz-border-hard)" }}>
             <h2 className="text-[13.5px] font-bold" style={{ color: "var(--bz-text-1)" }}>Top Clients by Revenue</h2>
-            <a href="/dashboard/clients" className="text-[11.5px] font-semibold" style={{ color: "#6366F1" }}>View all →</a>
+            <a href="/dashboard/clients" className="text-[11.5px] font-semibold" style={{ color: "#6366F1" }}>View all</a>
           </div>
           <div className="divide-y" style={{ borderColor: "var(--bz-border-hard)" }}>
             {topClients.map((c, i) => (

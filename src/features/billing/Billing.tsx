@@ -49,8 +49,14 @@ export default function BillingPage() {
   const [currentPlan, setCurrentPlan] = useState<PlanKey>("pro");
   const [confirmPlan, setConfirmPlan] = useState<PlanKey | null>(null);
   const [showPaymentForm, setShowPaymentForm] = useState(false);
+  const [showCancelModal, setShowCancelModal] = useState(false);
 
   const active = PLANS.find(p => p.key === currentPlan)!;
+
+  function confirmCancellation() {
+    setCurrentPlan("starter");
+    setShowCancelModal(false);
+  }
 
   function getPrice(p: typeof PLANS[0]) {
     if (p.monthlyPrice === 0) return null;
@@ -102,13 +108,23 @@ export default function BillingPage() {
             </div>
           </div>
           <div className="flex items-center gap-2 flex-wrap">
-            <div className="text-right">
-              <p className="text-[11px]" style={{ color: "var(--bz-text-3)" }}>Next billing date</p>
-              <p className="text-[13px] font-bold" style={{ color: "var(--bz-text-1)" }}>Jul 1, 2026</p>
-            </div>
-            <button className="px-4 py-2 rounded-lg text-[12.5px] font-semibold border" style={{ borderColor: "var(--bz-border-hard)", color: "var(--bz-text-2)" }}>
-              Cancel Plan
-            </button>
+            {currentPlan !== "starter" && (
+              <>
+                <div className="text-right">
+                  <p className="text-[11px]" style={{ color: "var(--bz-text-3)" }}>Next billing date</p>
+                  <p className="text-[13px] font-bold" style={{ color: "var(--bz-text-1)" }}>Jul 1, 2026</p>
+                </div>
+                <button onClick={() => setShowCancelModal(true)} className="px-4 py-2 rounded-lg text-[12.5px] font-semibold border" style={{ borderColor: "var(--bz-border-hard)", color: "var(--bz-text-2)" }}>
+                  Cancel Plan
+                </button>
+              </>
+            )}
+            {currentPlan === "starter" && (
+              <div className="text-right">
+                <p className="text-[11px]" style={{ color: "var(--bz-text-3)" }}>Plan status</p>
+                <p className="text-[13px] font-bold" style={{ color: "#10B981" }}>Free Tier</p>
+              </div>
+            )}
           </div>
         </div>
 
@@ -157,75 +173,89 @@ export default function BillingPage() {
             const isCurrent = plan.key === currentPlan;
             const upgrade = isUpgrade(plan.key);
             const downgrade = isDowngrade(plan.key);
+
             return (
-              <div key={plan.key} className="rounded-xl border flex flex-col transition-all duration-200"
+              <div key={plan.key} className="rounded-2xl border flex flex-col hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group overflow-hidden"
                 style={{
                   backgroundColor: "var(--bz-card-bg)",
                   borderColor: isCurrent ? plan.color : "var(--bz-border-hard)",
-                  boxShadow: isCurrent ? `0 0 0 2px ${plan.color}30` : undefined,
-                  transform: plan.key === "pro" ? "none" : undefined,
+                  boxShadow: isCurrent ? `0 0 15px -3px ${plan.color}25` : "none",
                 }}>
 
-                {/* Card top bar */}
-                <div className="h-1 rounded-t-xl" style={{ backgroundColor: plan.color }} />
+                {/* Card top bar accent */}
+                <div className="h-1.5 w-full" style={{ backgroundColor: plan.color }} />
 
                 <div className="p-5 flex-1 flex flex-col">
-                  <div className="flex items-start justify-between mb-3">
+                  {/* Plan Icon & Name */}
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl shrink-0 transition-transform duration-300 group-hover:scale-110" 
+                      style={{ backgroundColor: `${plan.color}12`, color: plan.color }}>
+                      {plan.icon}
+                    </div>
                     <div>
-                      <span className="text-2xl">{plan.icon}</span>
-                      <p className="text-[14px] font-extrabold mt-1" style={{ color: "var(--bz-text-1)" }}>{plan.name}</p>
+                      <p className="text-[14.5px] font-extrabold leading-none" style={{ color: "var(--bz-text-1)" }}>{plan.name}</p>
+                      <span className="text-[10px] font-semibold mt-1 block" style={{ color: "var(--bz-text-3)" }}>Subscription Plan</span>
                     </div>
                     {isCurrent && (
-                      <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full" style={{ backgroundColor: plan.color, color: "#fff" }}>Current</span>
+                      <span className="ml-auto text-[9.5px] font-extrabold px-2 py-0.5 rounded-full text-white shadow-sm" style={{ backgroundColor: plan.color }}>Active</span>
                     )}
                     {plan.key === "pro" && !isCurrent && (
-                      <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full" style={{ backgroundColor: "#6366F122", color: "#6366F1" }}>Popular</span>
+                      <span className="ml-auto text-[9.5px] font-extrabold px-2 py-0.5 rounded-full shadow-sm" style={{ backgroundColor: "#6366F122", color: "#6366F1" }}>Popular</span>
                     )}
                   </div>
 
-                  <p className="text-[11.5px] mb-3" style={{ color: "var(--bz-text-3)" }}>{plan.description}</p>
+                  <p className="text-[11.5px] mb-4 min-h-[34px]" style={{ color: "var(--bz-text-3)" }}>{plan.description}</p>
 
                   {/* Price */}
-                  <div className="mb-1">
+                  <div className="mb-4 bg-black/10 rounded-xl p-3 border" style={{ borderColor: "var(--bz-border-hard)" }}>
                     {price === null ? (
-                      <p className="text-[13px] font-bold" style={{ color: plan.color }}>Contact Sales</p>
+                      <p className="text-[16px] font-extrabold" style={{ color: plan.color }}>Custom Price</p>
                     ) : price === 0 ? (
-                      <p className="text-[24px] font-extrabold" style={{ color: plan.color }}>Free</p>
+                      <p className="text-[26px] font-extrabold tracking-tight" style={{ color: plan.color }}>Free <span className="text-[11.5px] font-medium" style={{ color: "var(--bz-text-3)" }}>forever</span></p>
                     ) : (
-                      <div className="flex items-end gap-1">
-                        <p className="text-[24px] font-extrabold leading-none" style={{ color: plan.color }}>AED {price}</p>
-                        <p className="text-[11.5px] mb-0.5" style={{ color: "var(--bz-text-3)" }}>/mo</p>
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-[11.5px] font-bold text-gray-400">AED</span>
+                        <span className="text-[26px] font-extrabold leading-none tracking-tight" style={{ color: plan.color }}>{price}</span>
+                        <span className="text-[11.5px] font-medium" style={{ color: "var(--bz-text-3)" }}>/mo</span>
                       </div>
                     )}
                     {billing === "annual" && price !== null && price > 0 && (
-                      <p className="text-[10.5px]" style={{ color: "var(--bz-text-3)" }}>AED {price * 12} billed annually</p>
+                      <p className="text-[9.5px] mt-1" style={{ color: "var(--bz-text-3)" }}>Billed annually (AED {price * 12}/yr)</p>
                     )}
                   </div>
 
-                  <p className="text-[10.5px] font-semibold mb-4 px-2 py-1 rounded-lg" style={{ backgroundColor: `${plan.color}12`, color: plan.color }}>{plan.limit}</p>
+                  {/* Capacity Limit Tag */}
+                  <div className="text-[10.5px] font-bold px-3 py-1.5 rounded-lg mb-4 flex items-center justify-between border border-dashed" 
+                    style={{ backgroundColor: `${plan.color}08`, borderColor: `${plan.color}25`, color: plan.color }}>
+                    <span>User Capacity</span>
+                    <span>{plan.limit.split(" · ")[0]}</span>
+                  </div>
 
-                  {/* Features */}
-                  <ul className="space-y-1.5 flex-1 mb-5">
+                  {/* Features List */}
+                  <ul className="space-y-2 flex-1 mb-5">
                     {plan.features.map(f => (
-                      <li key={f} className="flex items-start gap-2 text-[12px]" style={{ color: "var(--bz-text-2)" }}>
-                        <span className="mt-0.5 shrink-0 font-bold" style={{ color: plan.color }}>✓</span>{f}
+                      <li key={f} className="flex items-start gap-2 text-[12px] leading-tight" style={{ color: "var(--bz-text-2)" }}>
+                        <svg className="shrink-0 mt-0.5" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={plan.color} strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                        <span>{f}</span>
                       </li>
                     ))}
                   </ul>
 
-                  {/* CTA */}
+                  {/* Action CTA */}
                   {isCurrent ? (
-                    <div className="w-full py-2 rounded-lg text-[12.5px] font-bold text-center border" style={{ borderColor: plan.color, color: plan.color }}>
+                    <div className="w-full py-2.5 rounded-xl text-[12.5px] font-extrabold text-center border" style={{ borderColor: plan.color, color: plan.color, backgroundColor: `${plan.color}05` }}>
                       ✓ Your Current Plan
                     </div>
                   ) : plan.key === "enterprise" ? (
-                    <button className="w-full py-2 rounded-lg text-[12.5px] font-bold text-white" style={{ background: `linear-gradient(135deg,${plan.color},${plan.color}bb)` }}>
+                    <button className="w-full py-2.5 rounded-xl text-[12.5px] font-extrabold text-white shadow-md transition-all duration-200 hover:shadow-lg hover:brightness-105 active:scale-[0.98]" style={{ background: `linear-gradient(135deg,${plan.color},${plan.color}cc)` }}>
                       Contact Sales
                     </button>
                   ) : (
                     <button onClick={() => handleUpgrade(plan.key)}
-                      className="w-full py-2 rounded-lg text-[12.5px] font-bold text-white transition-opacity hover:opacity-90"
-                      style={{ background: `linear-gradient(135deg,${plan.color},${plan.color}bb)` }}>
+                      className="w-full py-2.5 rounded-xl text-[12.5px] font-extrabold text-white shadow-md transition-all duration-200 hover:shadow-lg hover:brightness-105 active:scale-[0.98]"
+                      style={{ background: `linear-gradient(135deg,${plan.color},${plan.color}cc)` }}>
                       {upgrade ? `Upgrade to ${plan.name}` : `Downgrade to ${plan.name}`}
                     </button>
                   )}
@@ -350,6 +380,30 @@ export default function BillingPage() {
           </div>
         );
       })()}
+
+      {/* Cancel Confirmation Modal */}
+      {showCancelModal && (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4" style={{ backgroundColor: "rgba(0,0,0,0.55)", backdropFilter: "blur(4px)" }}>
+          <div className="w-full max-w-md rounded-2xl border p-6 shadow-2xl" style={{ backgroundColor: "var(--bz-card-bg)", borderColor: "var(--bz-border-hard)" }}>
+            <span className="text-3xl">⚠️</span>
+            <h3 className="text-[16px] font-extrabold mt-2" style={{ color: "var(--bz-text-1)" }}>
+              Cancel your {active.name} Subscription?
+            </h3>
+            <p className="text-[12.5px] mt-1.5 mb-4" style={{ color: "var(--bz-text-3)" }}>
+              You will lose access to premium features, advanced analytics, custom branding, and recruiter seats at the end of your billing cycle on <strong>Jul 1, 2026</strong>.
+            </p>
+            <div className="rounded-lg p-3 mb-4 border text-[12px]" style={{ backgroundColor: "rgba(239,68,68,0.06)", borderColor: "rgba(239,68,68,0.2)", color: "#EF4444" }}>
+              Note: Downgrading to the Starter plan limits you to 1 active seat and 5 clients. Your data won't be deleted.
+            </div>
+            <div className="flex gap-3">
+              <button onClick={() => setShowCancelModal(false)} className="flex-1 py-2.5 rounded-lg text-[13px] font-semibold border" style={{ borderColor: "var(--bz-border-hard)", color: "var(--bz-text-2)" }}>Keep Plan</button>
+              <button onClick={confirmCancellation} className="flex-1 py-2.5 rounded-lg text-[13px] font-semibold text-white bg-red-500 hover:bg-red-600 transition-colors">
+                Cancel Subscription
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

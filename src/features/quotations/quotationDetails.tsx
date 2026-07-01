@@ -84,7 +84,7 @@ export default function QuotationDetailPage() {
           )}
           {quote.status === "accepted" && (
             <button onClick={() => markAs("converted")} className="px-3 py-2 rounded-lg text-[12.5px] font-semibold text-white" style={{ background: "linear-gradient(135deg,#8B5CF6,#6366F1)" }}>
-              Convert to Invoice →
+              Convert to Invoice
             </button>
           )}
           <button onClick={() => setEditOpen(true)} className="px-3 py-2 rounded-lg text-[12.5px] font-semibold border" style={{ borderColor: "var(--bz-border-hard)", backgroundColor: "var(--bz-card-bg)", color: "var(--bz-text-2)" }}>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 type Section = "general" | "team" | "notifications" | "billing" | "integrations" | "security";
 
@@ -261,7 +262,9 @@ export default function SettingsPage() {
                       <p className="text-[22px] font-extrabold mt-2" style={{ color: "var(--bz-text-1)" }}>AED 499 <span className="text-[14px] font-medium" style={{ color: "var(--bz-text-3)" }}>/month</span></p>
                       <p className="text-[12.5px] mt-1" style={{ color: "var(--bz-text-3)" }}>Up to 10 users · Unlimited job orders · Priority support</p>
                     </div>
-                    <button className="px-4 py-2 rounded-lg text-[12.5px] font-semibold border" style={{ borderColor: "var(--bz-border-hard)", color: "var(--bz-text-2)" }}>Upgrade</button>
+                    <Link href="/dashboard/billing">
+                      <button className="px-4 py-2 rounded-lg text-[12.5px] font-semibold border" style={{ borderColor: "var(--bz-border-hard)", color: "var(--bz-text-2)" }}>Upgrade</button>
+                    </Link>
                   </div>
                   <div className="mt-4 flex gap-2 flex-wrap">
                     {["Unlimited Clients","Unlimited Candidates","Invoice & Quotations","Sales Analytics","Job Tracker","API Access"].map(f => (
@@ -281,22 +284,50 @@ export default function SettingsPage() {
                 <div className="mt-4 flex justify-end"><SaveBtn /></div>
               </Card>
 
-              <Card title="Payment History">
+              <div className="rounded-xl border overflow-hidden" style={{ backgroundColor: "var(--bz-card-bg)", borderColor: "var(--bz-border-hard)" }}>
+                <div className="px-5 py-4 border-b" style={{ borderColor: "var(--bz-border-hard)", backgroundColor: "var(--bz-bg)" }}>
+                  <p className="text-[13.5px] font-bold" style={{ color: "var(--bz-text-1)" }}>Payment History</p>
+                </div>
+                <div className="hidden sm:grid grid-cols-[1fr_120px_100px_100px_100px] gap-4 px-5 py-2.5 border-b text-[10.5px] font-bold uppercase tracking-wider"
+                  style={{ borderColor: "var(--bz-border-hard)", color: "var(--bz-text-3)" }}>
+                  <span>Invoice</span><span>Period</span><span>Amount</span><span>Status</span><span className="text-right">Download</span>
+                </div>
                 {[
-                  { date: "Jun 1, 2026",  amount: "AED 499", status: "paid" },
-                  { date: "May 1, 2026",  amount: "AED 499", status: "paid" },
-                  { date: "Apr 1, 2026",  amount: "AED 499", status: "paid" },
-                ].map((p, i) => (
-                  <div key={i} className="flex items-center justify-between py-2.5 border-b last:border-b-0" style={{ borderColor: "var(--bz-border-hard)" }}>
-                    <span className="text-[12.5px]" style={{ color: "var(--bz-text-2)" }}>{p.date}</span>
-                    <div className="flex items-center gap-3">
-                      <span className="text-[12.5px] font-bold" style={{ color: "var(--bz-text-1)" }}>{p.amount}</span>
-                      <span className="text-[10.5px] font-bold px-2 py-0.5 rounded-full" style={{ backgroundColor: "rgba(16,185,129,0.1)", color: "#10B981" }}>Paid</span>
-                      <button className="text-[11.5px]" style={{ color: "#6366F1" }}>PDF</button>
+                  { date: "Jun 1, 2026",  period: "Jun 2026",  amount: 499,  status: "paid",    inv: "INV-B-0006" },
+                  { date: "May 1, 2026",  period: "May 2026",  amount: 499,  status: "paid",    inv: "INV-B-0005" },
+                  { date: "Apr 1, 2026",  period: "Apr 2026",  amount: 499,  status: "paid",    inv: "INV-B-0004" },
+                  { date: "Mar 1, 2026",  period: "Mar 2026",  amount: 499,  status: "paid",    inv: "INV-B-0003" },
+                  { date: "Feb 1, 2026",  period: "Feb 2026",  amount: 499,  status: "paid",    inv: "INV-B-0002" },
+                  { date: "Jan 1, 2026",  period: "Jan 2026",  amount: 499,  status: "paid",    inv: "INV-B-0001" },
+                ].map(h => (
+                  <div key={h.inv} className="border-b last:border-b-0" style={{ borderColor: "var(--bz-border-hard)" }}>
+                    {/* Mobile */}
+                    <div className="sm:hidden px-4 py-3 flex items-center justify-between gap-2">
+                      <div>
+                        <p className="text-[12.5px] font-semibold" style={{ color: "var(--bz-text-1)" }}>{h.inv}</p>
+                        <p className="text-[11.5px]" style={{ color: "var(--bz-text-3)" }}>{h.date} · {h.period}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-[13px] font-bold" style={{ color: "var(--bz-text-1)" }}>AED {h.amount}</p>
+                        <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full" style={{ backgroundColor: "rgba(16,185,129,0.1)", color: "#10B981" }}>Paid</span>
+                      </div>
+                    </div>
+                    {/* Desktop */}
+                    <div className="hidden sm:grid grid-cols-[1fr_120px_100px_100px_100px] gap-4 px-5 py-3.5 items-center hover:bg-[rgba(99,102,241,0.02)]">
+                      <div>
+                        <p className="text-[12.5px] font-semibold" style={{ color: "var(--bz-text-1)" }}>{h.inv}</p>
+                        <p className="text-[11px]" style={{ color: "var(--bz-text-3)" }}>{h.date}</p>
+                      </div>
+                      <span className="text-[12.5px]" style={{ color: "var(--bz-text-2)" }}>{h.period}</span>
+                      <span className="text-[13px] font-bold" style={{ color: "#6366F1" }}>AED {h.amount}</span>
+                      <span className="inline-flex items-center gap-1 text-[10.5px] font-bold px-2 py-0.5 rounded-full w-fit" style={{ backgroundColor: "rgba(16,185,129,0.1)", color: "#10B981" }}>
+                        <span className="h-1.5 w-1.5 rounded-full bg-[#10B981]" />Paid
+                      </span>
+                      <button className="text-right text-[12px] font-semibold" style={{ color: "#6366F1" }}>↓ PDF</button>
                     </div>
                   </div>
                 ))}
-              </Card>
+              </div>
             </>
           )}
 

@@ -707,7 +707,7 @@ export default function LoginPage() {
               className="font-semibold transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1] rounded"
               style={{ color: "var(--bz-badge-text)" }}
             >
-              Get started free →
+              Get started free
             </a>
           </p>
 

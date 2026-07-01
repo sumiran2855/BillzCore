@@ -616,7 +616,7 @@ export default function OnboardingPage() {
                   ))}
                 </ul>
                 <a href="/workspace" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-[13px] font-bold text-white" style={{ background: "linear-gradient(135deg,#6366F1,#8B5CF6)" }}>
-                  View all integrations →
+                  View all integrations
                 </a>
               </div>
               <div className="grid grid-cols-3 gap-3">
@@ -756,7 +756,7 @@ export default function OnboardingPage() {
                   </div>
                   <button className="w-full h-11 rounded-xl text-[13.5px] font-bold text-white transition-all hover:-translate-y-px"
                     style={{ background: "var(--bz-gradient)", boxShadow: "0 4px 20px -4px var(--bz-shadow-btn)" }}>
-                    Send Message →
+                    Send Message
                   </button>
                 </div>
               </div>
